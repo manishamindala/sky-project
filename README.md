@@ -1,203 +1,107 @@
-# 📘 CertifyMe — Full Stack Intern Assessment
+Nexora Admin Portal
+A full-stack web application built with Python Flask and SQLite for managing an institutional skills tracking system. Admins can manage learners, verifiers, collaborators, and opportunities through a clean, modern dashboard.
 
----
+🚀 Features
+Authentication
 
-## 🚀 Getting Started
+Admin Signup with full validation
+Admin Login with Remember Me support
+Forgot Password with token-based reset (logged to console)
+Captcha verification on all auth forms
+Session management with Flask sessions
 
-1. **Clone the provided repository**
-   ```bash
-   git clone https://github.com/Neerajvs32/Test1.git
-   ```
+Dashboard
 
-2. **Create your own GitHub repository**
-   - Push the cloned project to your own GitHub account.
-   - Share your repository link after completing the task.
+Overview stats (students, teachers, parents)
+Opportunity Analytics chart (daily/weekly/monthly/quarterly/yearly)
+Platform Analytics bar chart
+Notification panel
+Dark/Light theme toggle
 
-3. **Development Requirement**
-   - Both Frontend and Backend must run together.
-   - The UI must remain exactly the same.
-   - ❌ Do NOT modify frontend design or components.
-   - ✅ Build the backend required for the existing UI functionality.
+Learner Management
 
----
+View all students in a table
+Filter by status (Active, Inactive, Pending, Deactivated)
+Quick Add Student modal
+Bulk Upload via CSV
 
-## 🏢 Project Overview
+Verifier Management
 
-This project is part of the **CertifyMe Full Stack Intern Assessment**. The repository already contains a complete Admin UI. Your responsibility is to **build the backend and connect it with the existing frontend**.
+View all verifiers/teachers
+Filter by status
+Quick Add Verifier modal
+Bulk Upload via CSV
+View verifier details and subjects
 
-### Objectives
-- Build backend APIs using Flask
-- Connect frontend with backend
-- Store and retrieve data from database
-- Make the application fully functional
+Collaborator Management
 
-### 🔗 Original Repository
-[https://github.com/Neerajvs32/Test1](https://github.com/Neerajvs32/Test1)
+View all collaborators
+View submitted courses
+Approve or Reject courses
 
----
+Opportunity Management (fully connected to backend)
 
-## ⚙️ Tech Stack
+Create new opportunities with full form validation
+View all opportunities (admin-scoped, from database)
+Edit existing opportunities
+Delete with confirmation prompt
+View full details modal
+Empty state when no opportunities exist
 
-| Layer | Technology |
-|---|---|
-| Backend | Python |
-| Framework | Flask |
-| Database | SQLite / MySQL / PostgreSQL |
-| Frontend | Pre-built Admin UI |
+Reports & Analytics
 
----
+Student engagement trends
+Course completion rates by category
+Verification status table
+Student level distribution
 
-## 🧩 Features & User Stories
+⚙️ Setup & Installation
+Prerequisites
 
----
+Python 3.10+
+pip 
+Steps
+bash# 1. Clone the repository
+git clone https://github.com/Neerajvs32/Test1.git
+cd Test1/sky
 
-### ✅ Task 1 — Authentication *(Day 1)*
+# 2. Install dependencies
+pip install flask werkzeug
 
----
+# 3. Run the server
+python app.py 
 
-#### US-1.1 — Admin Sign Up
+🛠️ Tech Stack
+LayerTechnologyBackendPython, FlaskDatabaseSQLite (via Python stdlib sqlite3)FrontendHTML, CSS, Vanilla JavaScriptAuthFlask Sessions + Werkzeug password hashingStylingCustom CSS with CSS Variables (Orange & Dark theme)
 
-**Required Fields**
-- Full Name
-- Email
-- Password
-- Confirm Password
 
-**Validations**
-- All fields mandatory
-- Email must be valid
-- Password minimum 8 characters
-- Passwords must match
-- Email must be unique
+Open in browser
+http://localhost:5000
+The SQLite database is created automatically on first run.
+🔐 Security Features
 
-**Expected Result**
-- Save admin account
-- Redirect to Login page
+Passwords hashed using Werkzeug's generate_password_hash
+Admin isolation — each admin only sees their own opportunities
+Password reset tokens expire after 1 hour
+Tokens are single-use (marked as used after reset)
+Forgot password always returns the same message (privacy protection)
+CORS configured for localhost development
 
----
 
-#### US-1.2 — Admin Login
+📝 Notes
 
-**Fields**
-- Email
-- Password
-- Remember Me checkbox
+Password Reset Links are printed to the Flask console (no email sending at this stage)
+Opportunity data is fully persisted in SQLite and survives server restarts
+Session persistence — if Remember Me is checked, session lasts 30 days
+No external database required — SQLite is built into Python
 
-**Rules**
-- Show generic error on failure:
-  ```
-  Invalid email or password
-  ```
 
-**Expected Result**
-- Redirect to dashboard
-- Load opportunities created by the admin
+👨‍💻 Developer
+Manish Amindala
+Built as part of an internship task for the Qatar Foundation Admin Portal project.
 
-**Session Handling**
+📄 License
+This project is for educational/internship purposes.
 
-| Condition | Behaviour |
-|---|---|
-| Remember Me checked | Long-lived session |
-| Remember Me unchecked | Session ends when browser closes |
 
----
-
-#### US-1.3 — Forgot Password
-
-**Requirements**
-- Admin enters their email
-- Always show the same success message (regardless of whether email exists)
-
-**Behaviour**
-- Generate reset link internally
-- No email sending required
-
-**Security**
-- Reset link expires after **1 hour**
-- Expired link shows an error
-
----
-
-### ✅ Task 2 — Opportunity Management *(Day 2)*
-
-> All opportunities must be stored in the database, linked to the logged-in admin, and must never use hardcoded data.
-
----
-
-#### US-2.1 — View All Opportunities
-
-**Each opportunity card must display:**
-- Opportunity Name
-- Category
-- Duration
-- Start Date
-- Description
-
-**Rules**
-- Show only the logged-in admin's opportunities
-- Remove all demo / hardcoded cards
-- Show an empty state if no opportunities exist
-
----
-
-#### US-2.2 — Add New Opportunity
-
-**Required Fields**
-- Opportunity Name
-- Duration
-- Start Date
-- Description
-- Skills to Gain *(comma separated)*
-- Category
-- Future Opportunities
-
-**Optional Field**
-- Maximum Applicants
-
-**Category Options**
-- Technology
-- Business
-- Design
-- Marketing
-- Data Science
-- Other
-
-**Expected Result**
-- Validate all required fields
-- Save opportunity to database
-- Link opportunity to logged-in admin
-- Display immediately **without page refresh**
-
----
-
-#### US-2.3 — Opportunities Persist After Login
-
-- Opportunities must load after logout / login cycles
-- Stored only in the database — **no local storage usage**
-- Admins cannot access other admins' data
-
----
-
-#### US-2.4 — View Opportunity Details
-
-- Open a details modal
-- Show all saved fields
-- Close button available
-
----
-
-#### US-2.5 — Edit Opportunity
-
-- Edit button opens a pre-filled form
-- Apply the same validations as during creation
-- Update only the selected opportunity
-- Reflect changes instantly **without page refresh**
-
----
-
-#### US-2.6 — Delete Opportunity
-
-- Show a confirmation dialog before deletion
-- Delete permanently from the database
-- Remove from UI immediately **without page refresh**
-- Only the creator admin can delete their own opportunity
+🌐 **Live Demo:** [https://sky-project-xv5r.onrender.com](https://sky-project-xv5r.onrender.com)
