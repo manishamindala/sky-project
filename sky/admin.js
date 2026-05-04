@@ -3,7 +3,7 @@
    Full backend integration + UI logic
    ============================================================ */
 
-const API_BASE = 'http://localhost:5000/api';
+const API_BASE = '/api';
 
 // ── Low-level fetch ──────────────────────────────────────────
 async function apiFetch(method, path, body = null) {
